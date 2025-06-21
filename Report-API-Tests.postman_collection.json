@@ -1,0 +1,410 @@
+{
+  "info": {
+    "name": "Report API Tests",
+    "description": "Comprehensive test collection for the Report API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8002",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "netrunnerX",
+      "type": "string"
+    },
+    {
+      "key": "disasterId",
+      "value": "15376ea1-0fd8-49d6-b32a-df36ed3912fd",
+      "type": "string"
+    },
+    {
+      "key": "reportId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Create Report",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"disaster_id\": \"{{disasterId}}\",\n  \"content\": \"Flood waters rising rapidly in downtown area. Multiple cars stranded on Main Street.\",\n  \"image_url\": \"https://example.com/flood1.jpg\",\n  \"user_id\": \"citizen_reporter\",\n  \"verification_status\": \"pending\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/reports",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports"]
+        },
+        "description": "Create a new social media report for a disaster"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Report (Verified)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"disaster_id\": \"{{disasterId}}\",\n  \"content\": \"Emergency services responding to multiple calls in the affected area.\",\n  \"image_url\": \"https://example.com/emergency1.jpg\",\n  \"user_id\": \"local_news\",\n  \"verification_status\": \"verified\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/reports",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports"]
+        },
+        "description": "Create a verified report"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Report (Rejected)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"disaster_id\": \"{{disasterId}}\",\n  \"content\": \"Power outage reported in several neighborhoods. Stay safe everyone!\",\n  \"user_id\": \"power_company\",\n  \"verification_status\": \"rejected\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/reports",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports"]
+        },
+        "description": "Create a rejected report without image"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Reports for Disaster",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/reports/disaster/{{disasterId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports", "disaster", "{{disasterId}}"]
+        },
+        "description": "Get all reports for a specific disaster"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Reports with Filters",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/reports/disaster/{{disasterId}}?verification_status=pending&limit=10&offset=0",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports", "disaster", "{{disasterId}}"],
+          "query": [
+            {
+              "key": "verification_status",
+              "value": "pending"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            }
+          ]
+        },
+        "description": "Get reports with filters for pending reports"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Report Statistics",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/reports/disaster/{{disasterId}}/stats",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports", "disaster", "{{disasterId}}", "stats"]
+        },
+        "description": "Get statistics for reports of a specific disaster"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Single Report",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/reports/{{reportId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports", "{{reportId}}"]
+        },
+        "description": "Get a single report by ID"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Report",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"Updated: Flood waters continue to rise. Evacuation orders expanded.\",\n  \"verification_status\": \"verified\",\n  \"image_url\": \"https://example.com/flood_updated.jpg\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/reports/{{reportId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports", "{{reportId}}"]
+        },
+        "description": "Update an existing report"
+      },
+      "response": []
+    },
+    {
+      "name": "Verify Report (Admin)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"verification_status\": \"verified\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/reports/{{reportId}}/verify",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports", "{{reportId}}", "verify"]
+        },
+        "description": "Verify a report as an admin"
+      },
+      "response": []
+    },
+    {
+      "name": "Reject Report (Admin)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"verification_status\": \"rejected\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/reports/{{reportId}}/verify",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports", "{{reportId}}", "verify"]
+        },
+        "description": "Reject a report as an admin"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Report (Admin)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/reports/{{reportId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports", "{{reportId}}"]
+        },
+        "description": "Delete a report (admin only)"
+      },
+      "response": []
+    },
+    {
+      "name": "Test Rate Limiting",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"disaster_id\": \"{{disasterId}}\",\n  \"content\": \"Test report for rate limiting\",\n  \"user_id\": \"test_user\",\n  \"verification_status\": \"pending\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/reports",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports"]
+        },
+        "description": "Test rate limiting by making multiple requests quickly"
+      },
+      "response": []
+    },
+    {
+      "name": "Test Validation - Missing Required Fields",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"This should fail validation\",\n  \"user_id\": \"test_user\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/reports",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports"]
+        },
+        "description": "Test validation by missing required disaster_id field"
+      },
+      "response": []
+    },
+    {
+      "name": "Test Validation - Invalid Verification Status",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"disaster_id\": \"{{disasterId}}\",\n  \"content\": \"Test report with invalid verification status\",\n  \"user_id\": \"test_user\",\n  \"verification_status\": \"invalid_status\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/reports",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports"]
+        },
+        "description": "Test validation with invalid verification status"
+      },
+      "response": []
+    },
+    {
+      "name": "Test Non-existent Disaster",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"disaster_id\": \"99999999-9999-9999-9999-999999999999\",\n  \"content\": \"Test report for non-existent disaster\",\n  \"user_id\": \"test_user\",\n  \"verification_status\": \"pending\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/reports",
+          "host": ["{{baseUrl}}"],
+          "path": ["reports"]
+        },
+        "description": "Test creating report for non-existent disaster"
+      },
+      "response": []
+    }
+  ]
+} 

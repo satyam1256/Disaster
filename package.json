@@ -1,0 +1,33 @@
+{
+  "name": "disaster",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/satyam1256/Disaster.git"
+  },
+  "author": "Satyam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/satyam1256/Disaster/issues"
+  },
+  "homepage": "https://github.com/satyam1256/Disaster#readme",
+  "description": "",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.7",
+    "axios": "^1.6.7",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.0.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "winston": "^3.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
