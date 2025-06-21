@@ -14,6 +14,7 @@ import DisasterDetail from './pages/DisasterDetail';
 import ReportForm from './pages/ReportForm';
 import ReportsList from './pages/ReportsList';
 import GeocodingTool from './pages/GeocodingTool';
+import UserSelector from './components/UserSelector';
 
 // Create theme
 const theme = createTheme({
@@ -52,6 +53,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <UserSelector />
       <Router>
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           <AppBar position="static">

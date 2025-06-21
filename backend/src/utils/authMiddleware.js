@@ -1,16 +1,18 @@
-const users = [
-  { id: 'netrunnerX', role: 'admin' },
-  { id: 'reliefAdmin', role: 'contributor' }
-];
+// Mock users and roles
+const users = {
+  netrunnerX: { username: 'netrunnerX', role: 'admin' },
+  reliefAdmin: { username: 'reliefAdmin', role: 'admin' },
+  volunteerJoe: { username: 'volunteerJoe', role: 'contributor' },
+  demoUser: { username: 'demoUser', role: 'contributor' },
+};
 
-// Middleware to assign user based on header or round-robin (for demo)
-let userIndex = 0;
-module.exports = (req, res, next) => {
-  // Use x-user header if provided
-  const userId = req.header('x-user');
-  const user = users.find(u => u.id === userId) || users[userIndex];
-  req.user = user;
-  // Round-robin for next request if no header
-  if (!userId) userIndex = (userIndex + 1) % users.length;
+function authMiddleware(req, res, next) {
+  const username = req.header('x-user');
+  if (!username || !users[username]) {
+    return res.status(401).json({ error: 'Unauthorized: Invalid or missing x-user header' });
+  }
+  req.user = users[username];
   next();
-}; 
+}
+
+module.exports = authMiddleware; 

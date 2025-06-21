@@ -10,14 +10,13 @@ const api = axios.create({
   },
 });
 
-// Mock authentication headers (in real app, this would come from login)
-const mockAuthHeaders = {
-  'Authorization': 'Bearer netrunnerX',
-};
-
-// Add auth headers to requests
+// Add x-user header from localStorage to every request
 api.interceptors.request.use((config) => {
-  config.headers = { ...config.headers, ...mockAuthHeaders };
+  const selectedUser = localStorage.getItem('selectedUser');
+  if (selectedUser) {
+    const { username } = JSON.parse(selectedUser);
+    config.headers['x-user'] = username;
+  }
   return config;
 });
 

@@ -1,5 +1,6 @@
 const express = require('express');
-const { authMiddleware } = require('../middleware/authMiddleware');
+const authMiddleware = require('../utils/authMiddleware');
+const roleMiddleware = require('../utils/roleMiddleware');
 const { reportLimiter } = require('../middleware/rateLimiter');
 
 module.exports = (io) => {
@@ -9,28 +10,18 @@ module.exports = (io) => {
   // Apply authentication middleware to all routes
   router.use(authMiddleware);
 
-  // Create a new report
+  // Only admins: update, delete, verify
+  router.put('/:id', roleMiddleware('admin'), reportLimiter, reportController.updateReport);
+  router.delete('/:id', roleMiddleware('admin'), reportLimiter, reportController.deleteReport);
+  router.patch('/:id/verify', roleMiddleware('admin'), reportLimiter, reportController.verifyReport);
+
+  // All authenticated users: create
   router.post('/', reportLimiter, reportController.createReport);
 
-  // Get all reports for a disaster
+  // All authenticated users: view
   router.get('/disaster/:disaster_id', reportController.getReports);
-
-  // Get report statistics for a disaster
   router.get('/disaster/:disaster_id/stats', reportController.getReportStats);
-
-  // Get a single report by ID
   router.get('/:id', reportController.getReport);
-
-  // Update a report
-  router.put('/:id', reportLimiter, reportController.updateReport);
-
-  // Delete a report
-  router.delete('/:id', reportLimiter, reportController.deleteReport);
-
-  // Verify a report (admin function)
-  router.patch('/:id/verify', reportLimiter, reportController.verifyReport);
-
-  // Get all reports (no disaster filter)
   router.get('/', reportController.getAllReports);
 
   return router;
