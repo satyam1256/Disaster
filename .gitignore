@@ -1,38 +1,31 @@
 # Environment variables
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
 # Dependencies
-node_modules/
+node_modules
+frontend/node_modules
 
-# Documentation files (except README.md)
-*.md
-!README.md
+# Documentation files
+GEOSPATIAL_TESTING.md
+REPORT_API_README.md
+SOCKET_TESTING.md
 
 # Test files
 test/
 tests/
-**/*.test.js
-**/*.test.jsx
-**/*.test.ts
-**/*.test.tsx
-**/*.spec.js
-**/*.spec.jsx
-**/*.spec.ts
-**/*.spec.tsx
+
 test-events.js
 test-rate-limiting.js
 test-rate-limiting.sh
 test-socket.js
+
 coverage/
 .nyc_output/
 
 # Postman collection files
-*.postman_collection.json
-*.postman_collection.json.bak
+Report-API-Tests.postman_collection.json
 
 # SQL files
-*.sql
+test_reports_table.sql
+supabase_geospatial_setup.sql
+reports_table_setup.sql
