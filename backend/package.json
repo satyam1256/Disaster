@@ -1,8 +1,11 @@
 {
-  "name": "disaster",
+  "name": "disaster-backend",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build": "echo 'No build step required for Node.js backend'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,7 +18,10 @@
     "url": "https://github.com/satyam1256/Disaster/issues"
   },
   "homepage": "https://github.com/satyam1256/Disaster#readme",
-  "description": "",
+  "description": "Backend for Disaster Response Platform",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.7",
     "axios": "^1.6.7",

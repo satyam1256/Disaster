@@ -56,6 +56,34 @@ Node.js/Express.js backend for the Disaster Response Platform with real-time dat
    node index.js
    ```
 
+## 🚀 Deployment (Render)
+
+### Backend Deployment
+1. **Connect your GitHub repository to Render**
+2. **Create a new Web Service**
+3. **Configure the service**:
+   - **Build Command**: `cd backend && npm install`
+   - **Start Command**: `cd backend && npm start`
+   - **Environment**: Node
+   - **Node Version**: 18 or higher
+
+4. **Set Environment Variables**:
+   - `SUPABASE_URL`: Your Supabase project URL
+   - `SUPABASE_KEY`: Your Supabase anon key
+   - `NODE_ENV`: `production`
+   - `PORT`: `10000` (Render's default)
+   - `GEMINI_API_KEY`: Your Gemini API key (optional)
+   - `GEOAPIFY_API_KEY`: Your Geoapify API key (optional)
+
+5. **Deploy**
+
+### Frontend Deployment
+1. **Create a new Static Site**
+2. **Configure**:
+   - **Build Command**: `cd frontend && npm install && npm run build`
+   - **Publish Directory**: `frontend/build`
+   - **Environment Variable**: `REACT_APP_API_URL` = Your backend URL
+
 ## 📡 API Endpoints
 
 ### Disasters
