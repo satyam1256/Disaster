@@ -23,7 +23,8 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Tooltip
+  Tooltip,
+  Snackbar
 } from '@mui/material';
 import {
   Add,
@@ -34,6 +35,7 @@ import {
   FilterList,
   Refresh
 } from '@mui/icons-material';
+import MuiAlert from '@mui/material/Alert';
 
 import { disasterAPI } from '../services/api';
 import socketService from '../services/socket';
@@ -45,6 +47,7 @@ const DisasterList = () => {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [tagFilter, setTagFilter] = useState('all');
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'error' });
 
   useEffect(() => {
     loadDisasters();
@@ -77,7 +80,11 @@ const DisasterList = () => {
         await disasterAPI.deleteDisaster(id);
         loadDisasters();
       } catch (err) {
-        setError('Failed to delete disaster');
+        if (err.response && err.response.status === 403) {
+          setSnackbar({ open: true, message: "You don't have permission to delete disasters.", severity: 'error' });
+        } else {
+          setSnackbar({ open: true, message: 'Failed to delete disaster', severity: 'error' });
+        }
         console.error('Error deleting disaster:', err);
       }
     }
@@ -299,6 +306,17 @@ const DisasterList = () => {
           Showing {filteredDisasters.length} of {disasters.length} disasters
         </Typography>
       </Box>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <MuiAlert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity} sx={{ width: '100%' }}>
+          {snackbar.message}
+        </MuiAlert>
+      </Snackbar>
     </Box>
   );
 };
