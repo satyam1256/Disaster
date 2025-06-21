@@ -48,7 +48,7 @@ A React-based frontend for the Disaster Response Platform with real-time updates
 
 3. **Access Application**:
    - Frontend: http://localhost:3000
-   - Backend: http://localhost:8002 (must be running)
+   - Backend: https://disaster-jupe.onrender.com (must be running)
 
 ## Usage
 

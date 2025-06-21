@@ -10,6 +10,8 @@ services:
         value: production
       - key: PORT
         value: 10000
+      - key: FRONTEND_URL
+        value: https://disaster-frontend-six.vercel.app
     healthCheckPath: /health
 
   - type: web
@@ -20,4 +22,4 @@ services:
     staticPublishPath: frontend/build
     envVars:
       - key: REACT_APP_API_URL
-        value: https://disaster-backend.onrender.com 
+        value: https://disaster-jupe.onrender.com 

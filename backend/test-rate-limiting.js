@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const BASE_URL = 'http://localhost:8002';
+const BASE_URL = 'https://disaster-jupe.onrender.com';
 
 // Helper function to make requests and show results
 async function makeRequest(name, requestFn) {

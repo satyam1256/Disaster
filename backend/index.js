@@ -7,14 +7,41 @@ const { generalLimiter } = require('./src/middleware/rateLimiter');
 
 const app = express();
 const server = http.createServer(app);
+
+// CORS configuration
+const allowedOrigins = [
+  'http://localhost:3000', // Local development
+  process.env.FRONTEND_URL || 'https://disaster-frontend-six.vercel.app', // Frontend URL from env
+  (process.env.FRONTEND_URL || 'https://disaster-frontend-six.vercel.app') + '/', // With trailing slash
+].filter(Boolean); // Remove any undefined values
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-user', 'x-role']
+};
+
+app.use(cors(corsOptions));
+
+// Socket.IO CORS configuration
 const io = new Server(server, {
   cors: {
-    origin: '*', // Allow all origins for testing; restrict in production
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
   }
 });
 
-app.use(cors());
 app.use(express.json());
 
 // Apply general rate limiting to all routes
@@ -49,6 +76,7 @@ app.use('*', (req, res) => {
 const PORT = process.env.PORT || 8002;
 server.listen(PORT, () => {
   console.log(`🚀 Disaster Response Platform Server running on port ${PORT}`);
+  console.log('🌐 CORS Allowed Origins:', allowedOrigins);
   console.log('📡 Available endpoints:');
   console.log('   • GET  /health');
   console.log('   • POST /geocode');
