@@ -53,7 +53,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <UserSelector />
       <Router>
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           <AppBar position="static">
@@ -64,6 +63,10 @@ function App() {
               </Typography>
             </Toolbar>
           </AppBar>
+          
+          <Box sx={{ mt: 2, mb: 1, px: 2 }}>
+            <UserSelector />
+          </Box>
           
           <Navigation />
           
