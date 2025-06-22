@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const BASE_URL = 'http://localhost:8002';
+const BASE_URL = 'https://disaster-jupe.onrender.com';
 const TEST_DISASTER_ID = 'test-123'; // You'll need to replace this with a real disaster ID
 
 // Mock user for testing (you may need to adjust based on your auth setup)
