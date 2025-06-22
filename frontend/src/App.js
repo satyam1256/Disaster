@@ -1,9 +1,14 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box, AppBar, Toolbar, Typography, Container } from '@mui/material';
-import { Warning, Home, Add, List, LocationOn } from '@mui/icons-material';
+import { Warning } from '@mui/icons-material';
+
+import { ThemeProvider as CustomThemeProvider } from './contexts/ThemeContext';
+import { UserProvider } from './contexts/UserContext';
+import { createAppTheme } from './theme/theme';
+import { useTheme } from './contexts/ThemeContext';
 
 import socketService from './services/socket';
 import Navigation from './components/Navigation';
@@ -15,31 +20,12 @@ import ReportForm from './pages/ReportForm';
 import ReportsList from './pages/ReportsList';
 import GeocodingTool from './pages/GeocodingTool';
 import UserSelector from './components/UserSelector';
+import ThemeToggle from './components/ThemeToggle';
 
-// Create theme
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#d32f2f', // Red for emergency/disaster theme
-    },
-    secondary: {
-      main: '#1976d2', // Blue for secondary actions
-    },
-    background: {
-      default: '#f5f5f5',
-    },
-  },
-  typography: {
-    h4: {
-      fontWeight: 600,
-    },
-    h5: {
-      fontWeight: 600,
-    },
-  },
-});
+function AppContent() {
+  const { darkMode } = useTheme();
+  const theme = createAppTheme(darkMode);
 
-function App() {
   useEffect(() => {
     // Connect to Socket.IO on app start
     socketService.connect();
@@ -58,9 +44,10 @@ function App() {
           <AppBar position="static">
             <Toolbar>
               <Warning sx={{ mr: 2 }} />
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 600 }}>
                 Disaster Response Platform
               </Typography>
+              <ThemeToggle />
             </Toolbar>
           </AppBar>
           
@@ -87,6 +74,16 @@ function App() {
         </Box>
       </Router>
     </ThemeProvider>
+  );
+}
+
+function App() {
+  return (
+    <CustomThemeProvider>
+      <UserProvider>
+        <AppContent />
+      </UserProvider>
+    </CustomThemeProvider>
   );
 }
 

@@ -9,7 +9,7 @@ class SocketService {
   connect() {
     if (this.socket) return;
 
-    this.socket = io('https://disaster-jupe.onrender.com', {
+    this.socket = io('http://localhost:8002', {
       transports: ['websocket', 'polling'],
     });
 

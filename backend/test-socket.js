@@ -1,9 +1,9 @@
 const { io } = require("socket.io-client");
 
 console.log('🚀 Starting Socket.IO test client...');
-console.log('Connecting to https://disaster-jupe.onrender.com...\n');
+console.log('Connecting to http://localhost:8002...\n');
 
-const socket = io("https://disaster-jupe.onrender.com");
+const socket = io("http://localhost:8002");
 
 // Connection events
 socket.on("connect", () => {

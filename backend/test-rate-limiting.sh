@@ -3,7 +3,7 @@
 echo "🧪 Testing Rate Limiting Features"
 echo "=================================="
 
-BASE_URL="https://disaster-jupe.onrender.com"
+BASE_URL="http://localhost:8002"
 
 echo ""
 echo "1️⃣ Testing General Rate Limiting (100 requests per 15 minutes)"

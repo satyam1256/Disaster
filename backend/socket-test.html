@@ -95,7 +95,7 @@
     };
 
     // Connect to Socket.IO server
-    const socket = io('https://disaster-jupe.onrender.com');
+    const socket = io('http://localhost:8002');
 
     socket.on('connect', () => {
       log('✅ Connected to Socket.IO server!');
